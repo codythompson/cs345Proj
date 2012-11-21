@@ -16,9 +16,9 @@
 --values (3, 9780425043769);
 
 insert into Loans
-values (1, 1, null, to_date('2013/01/01','yyyy/mm/dd'));
+values (4, 5, null, to_date('2013/01/01','yyyy/mm/dd'));
 insert into Loans
-values (2, 6, to_date('10/20/2012', 'mm/dd/yyyy'),
+values (5, 6, to_date('10/20/2012', 'mm/dd/yyyy'),
         to_date('2013/01/01','yyyy/mm/dd'));
 insert into Loans
 values (3, 5, to_date('12/01/2011', 'mm/dd/yyyy'), 
