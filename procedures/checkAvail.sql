@@ -22,7 +22,7 @@ begin
         select to_char(min(loans.due), 'mm/dd/yyyy') into availDate from loans
         left join copies on loans.copyid = copies.copyid
         left join books on copies.isbn = books.isbn
-        where lower(books.title) = lower(bookTitle) and loans.returned = null;
+        where lower(books.title) = lower(bookTitle) and loans.returned is null;
 
         dbms_output.put_line('Expected available on: ' || availDate);
     end if;
