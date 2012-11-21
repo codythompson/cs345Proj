@@ -7,17 +7,18 @@ is
 begin
   select patronid into pId from patrons
   where lower(name) = lower(patronName);
+  return pId;
 end;
 /
 
 create or replace procedure LoanHistory (patronName IN varchar2)
 is
   cursor loans_cur is
-  select book.title title, loans.due due, loans.returned returned
+  select books.title title, loans.due due, loans.returned returned
   from loans
   left join copies on loans.copyid = copies.copyid
   left join books on copies.isbn = books.isbn
-  where loans.patronid = GetPatronId()
+  where loans.patronid = GetPatronId(patronName)
   order by loans.returned nulls first, loans.due;
 begin
   dbms_output.put_line(patronName || ' Loan History:');
@@ -34,8 +35,8 @@ begin
     end if;
   end loop;
   
-  dbms_output.put_line();
+  dbms_output.put_line('');
   dbms_output.put_line('END OF REPORT');
-  dbms_output.put_line();
+  dbms_output.put_line('');
 end;
 /
