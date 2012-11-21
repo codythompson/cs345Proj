@@ -16,17 +16,10 @@ end;
 set serveroutput on;
 create or replace procedure CheckAvailability (bookTitle IN varchar2)
 is
-    numAvail number;
+    numAvail number := GetNumAvail(bookTitle);
     availDate varchar2(10);
 begin
     dbms_output.put_line(bookTitle || ' availability:');
-
-    select count(c.copyid) into numAvail from copies c
-    left join books on c.isbn = books.isbn
-    where lower(books.title) = lower(bookTitle) and
-    not exists(
-        select copyid from loans
-        where loans.copyid = c.copyid and loans.returned is null);
 
     if numAvail > 0 then
         dbms_output.put_line(to_char(numAvail) || ' copies of ' || bookTitle ||
