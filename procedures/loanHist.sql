@@ -40,3 +40,32 @@ begin
   dbms_output.put_line('');
 end;
 /
+
+create or replace procedure CurrentlyCheckedOut(patronName IN varchar2)
+is
+  cursor loans_cur is
+  select books.title title, loans.due due
+  from loans
+  left join copies on loans.copyid = copies.copyid
+  left join books on copies.isbn = books.isbn
+  where loans.patronid = GetPatronId(patronName) and
+  loans.returned is null
+  order by loans.due asc;
+begin
+  dbms_output.put_line(patronName || ' Loan History:');
+  
+  for rec in loans_cur
+  loop
+    dbms_output.put_line('----------------------');
+    dbms_output.put_line(rec.title);
+    dbms_output.put_line('DUE : ' || to_char(rec.due, 'mm/dd/yyyy'));
+    if rec.due > sysdate then
+        dbms_output.put_line('THIS BOOK IS OVERDUE!');
+    end if;
+  end loop;
+
+  dbms_output.put_line('----------------------');
+  dbms_output.put_line('END OF REPORT');
+  dbms_output.put_line('----------------------');
+end;
+/
