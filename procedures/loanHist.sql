@@ -59,7 +59,7 @@ begin
     dbms_output.put_line('----------------------');
     dbms_output.put_line(rec.title);
     dbms_output.put_line('DUE : ' || to_char(rec.due, 'mm/dd/yyyy'));
-    if rec.due > sysdate then
+    if rec.due < sysdate then
         dbms_output.put_line('THIS BOOK IS OVERDUE!');
     end if;
   end loop;

@@ -1,5 +1,5 @@
 create or replace function GetNumAvail (bookTitle IN varchar2)
-return number;
+return number
 is
   numAvail number;
 begin
