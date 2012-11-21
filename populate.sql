@@ -15,11 +15,18 @@
 --insert into Copies
 --values (3, 9780425043769);
 
-insert into Loans
-values (1, 4, null, to_date('2013/01/01','yyyy/mm/dd'));
-insert into Loans
-values (2, 6, to_date('10/20/2012', 'mm/dd/yyyy',
-        to_date('2013/01/01','yyyy/mm/dd'));
-insert into Loans
-values (3, 5, to_date('12/01/2011', 'mm/dd/yyyy'), 
-    to_date('2013/01/01','yyyy/mm/dd'));
+--insert into Loans
+--values (1, 4, null, to_date('2013/01/01','yyyy/mm/dd'));
+--insert into Loans
+--values (2, 6, to_date('10/20/2012', 'mm/dd/yyyy',
+--        to_date('2013/01/01','yyyy/mm/dd'));
+--insert into Loans
+--values (3, 5, to_date('12/01/2011', 'mm/dd/yyyy'), 
+--    to_date('2013/01/01','yyyy/mm/dd'));
+
+insert into patrons
+values(
+5, 'Cody Thompson', '444 West 4th St. Flagstaff, AZ', 9285486515);
+insert into patrons
+values(
+6, 'Joe Shmoe', '444 North Smug St, Flagstaff, AZ', 6025986247);
