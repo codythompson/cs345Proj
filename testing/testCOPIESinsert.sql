@@ -21,11 +21,11 @@ values (654321, 'TEST BOOK', 'Test Author', 'Some Publisher', SYSDATE);
 -- Here the insert does work because it has a proper ISBN referenced
 insert into cdt27.copies
 (copyid, isbn)
-values (2, 654321);
+values (8, 654321);
 
 -- Here the insert does NOT work because it has a improper ISBN referenced
 insert into cdt27.copies
 (copyid, isbn)
-values (2, 44444);
+values (8, 44444);
 
 rollback;
