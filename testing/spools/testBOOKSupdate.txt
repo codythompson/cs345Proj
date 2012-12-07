@@ -18,6 +18,18 @@ ORA-01407: cannot update ("CDT27"."BOOKS"."ISBN") to NULL
 
 
 SQL> 
+SQL> -- this should fails because it changes the isbn of an entry that other rows
+SQL> -- reference
+SQL> update books
+  2  set isbn = 111
+  3  where isbn = 9780140042528;
+update books
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (CDT27.ISBN_FK) violated - child record found 
+
+
+SQL> 
 SQL> rollback;
 
 Rollback complete.
