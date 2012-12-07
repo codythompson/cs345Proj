@@ -1,0 +1,38 @@
+SQL> @testCOPIESupdate.txt
+SP2-0310: unable to open file "testCOPIESupdate.txt"
+SQL> @testCOPIESupdate
+SQL> -- this should update just fine (because this ISBN exists)
+SQL> update copies
+  2  set isbn = 9780140042528
+  3  where copyid = 6;
+
+1 row updated.
+
+SQL> 
+SQL> -- this should fail because none of the columns in the copies table allow nulls
+SQL> update copies
+  2  set isbn = null, copyid = null
+  3  where copyid = 6;
+set isbn = null, copyid = null
+    *
+ERROR at line 2:
+ORA-01407: cannot update ("CDT27"."COPIES"."ISBN") to NULL 
+
+
+SQL> 
+SQL> -- this should fail because it changes the isbn of an entry that is referenced by books(isbn) (it doesn't exist so the reference breaks)
+SQL> update copies
+  2  set isbn = 8888888888
+  3  where copyid = 6;
+update copies
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CDT27.ISBN_FK) violated - parent key not found 
+
+
+SQL> 
+SQL> rollback;
+
+Rollback complete.
+
+SQL> spool off
