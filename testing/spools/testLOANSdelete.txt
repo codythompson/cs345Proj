@@ -1,0 +1,13 @@
+SQL> @testLOANSdelete
+SQL> -- this should work
+SQL> delete from cdt27.loans
+  2  where copyid = 3 AND patronid = 1;
+
+1 row deleted.
+
+SQL> 
+SQL> rollback;
+
+Rollback complete.
+
+SQL> spool off
