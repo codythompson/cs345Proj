@@ -6,12 +6,12 @@ where patronid = 6 AND copyid = 2;
 -- this should fail because none of the columns in the loans table allow nulls
 update loans
 set copyid = null, patronid = null, due = null
-where patronid = 6 AND copyid = 2;
+where patronid = 1 AND copyid = 5;
 
 -- because the two FK are referenced from other tables and if the data doesn't exist the update 
 -- will fail
 update loans
-set patronid = 1111, copid = 2222
-where patronid = 6 AND copid = 2;
+set patronid = 1111, copyid = 2222
+where patronid = 1 AND copyid = 5;
 
 rollback;

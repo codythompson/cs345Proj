@@ -1,0 +1,38 @@
+SQL> @testLOANSupdate
+SQL> -- this should update just fine where patronid_fk and copid_fk exist in patron and copies
+SQL> update loans
+  2  set copyid = 5, patronid = 1, returned = SYSDATE, due = SYSDATE
+  3  where patronid = 6 AND copyid = 2;
+
+2 rows updated.
+
+SQL> 
+SQL> -- this should fail because none of the columns in the loans table allow nulls
+SQL> update loans
+  2  set copyid = null, patronid = null, due = null
+  3  where patronid = 1 AND copyid = 5;
+set copyid = null, patronid = null, due = null
+    *
+ERROR at line 2:
+ORA-01407: cannot update ("CDT27"."LOANS"."COPYID") to NULL 
+
+
+SQL> 
+SQL> -- because the two FK are referenced from other tables and if the data doesn't exist the update
+SQL> -- will fail
+SQL> update loans
+  2  set patronid = 1111, copyid = 2222
+  3  where patronid = 1 AND copyid = 5;
+update loans
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CDT27.PATRONID_FK) violated - parent key not
+found 
+
+
+SQL> 
+SQL> rollback;
+
+Rollback complete.
+
+SQL> spool off

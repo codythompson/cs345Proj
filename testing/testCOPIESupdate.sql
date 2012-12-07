@@ -5,7 +5,7 @@ where copyid = 6;
 
 -- this should fail because none of the columns in the copies table allow nulls
 update copies
-set isbn = null, copid = null
+set isbn = null, copyid = null
 where copyid = 6;
 
 -- this should fail because it changes the isbn of an entry that is referenced by books(isbn) (it doesn't exist so the reference breaks)
