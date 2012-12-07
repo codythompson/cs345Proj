@@ -1,0 +1,37 @@
+SQL> @testADMINupdate
+SQL> -- this should update just fine
+SQL> update admin
+  2  set adminid = 99, name = 'cody', address = '15 awesome st.', telephone = 6665554444, superuser = 0
+  3  where adminid = 2;
+
+1 row updated.
+
+SQL> 
+SQL> -- this should fail because none of the columns in the admin table allow nulls
+SQL> update admin
+  2  set adminid = null, name = null, address = null, telephone = null
+  3  where adminid = 1;
+set adminid = null, name = null, address = null, telephone = null
+    *
+ERROR at line 2:
+ORA-01407: cannot update ("CDT27"."ADMIN"."ADMINID") to NULL 
+
+
+SQL> 
+SQL> -- this should fail because it changes the adminid_pk of an entry to an
+SQL> -- existing pk
+SQL> update admin
+  2  set adminid = 99
+  3  where adminid = 1;
+update admin
+*
+ERROR at line 1:
+ORA-00001: unique constraint (CDT27.ADMINID_PK) violated 
+
+
+SQL> 
+SQL> rollback;
+
+Rollback complete.
+
+SQL> spool off
