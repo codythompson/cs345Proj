@@ -1,0 +1,51 @@
+SQL> @testLOANSinsert
+SQL> -- Here is a working test of a loans entry
+SQL> insert into cdt27.loans
+  2  (copyid, patronid, returned, due)
+  3  values (6, 7, null, SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> -- Here is a NON working test of a loans entry (no null values except for due)
+SQL> insert into cdt27.loans
+  2  (copyid, patronid, returned, due)
+  3  values (null, null, null, null);
+values (null, null, null, null)
+        *
+ERROR at line 3:
+ORA-01400: cannot insert NULL into ("CDT27"."LOANS"."COPYID") 
+
+
+SQL> 
+SQL> -- Here the insert does NOT work because it has a improper copyid_fk referenced
+SQL> 
+SQL> insert into cdt27.loans
+  2  (copyid, patronid, returned, due)
+  3  values (7, 7, SYSDATE, SYSDATE);
+insert into cdt27.loans
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CDT27.COPYID_FK) violated - parent key not
+found 
+
+
+SQL> 
+SQL> -- Here the insert does NOT work because it has a improper patronid_fk referenced
+SQL> 
+SQL> insert into cdt27.loans
+  2  (copyid, patronid, returned, due)
+  3  values (6, 8, SYSDATE, SYSDATE);
+insert into cdt27.loans
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CDT27.PATRONID_FK) violated - parent key not
+found 
+
+
+SQL> 
+SQL> rollback;
+
+Rollback complete.
+
+SQL> spool off
