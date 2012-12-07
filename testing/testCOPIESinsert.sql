@@ -6,7 +6,7 @@ values (null, null);
 -- This should insert just fine
 insert into cdt27.copies
 (copyid, isbn)
-values (7, 97880140042528);
+values (7, 9780140042528);
 
 -- This should NOt insert because the PK is the same as above
 insert into cdt27.copies
