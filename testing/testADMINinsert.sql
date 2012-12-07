@@ -12,3 +12,5 @@ values (234, 'Mark', '5 Street', 1234567, 0);
 insert into cdt27.admin
 (adminid, name, address, telephone, superuser)
 values (234, 'Cody', '6 Street', 1234568, 1);
+
+rollback;
