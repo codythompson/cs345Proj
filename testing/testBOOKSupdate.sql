@@ -8,4 +8,10 @@ update books
 set isbn = NULL, title = NULL, author = NULL, publisher = NULL, publishdate = NULL
 where isbn = 9780140042528;
 
+-- this should fails because it changes the isbn of an entry that other rows
+-- reference
+update books
+set isbn = 111
+where isbn = 9780140042528;
+
 rollback;
