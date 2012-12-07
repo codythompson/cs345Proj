@@ -1,0 +1,37 @@
+SQL> @testPATRONSupdate
+SQL> -- this should update just fine
+SQL> update patrons
+  2  set name = 'Mark', address = '5 cool st.', telephone = 5551238888
+  3  where patronid = 1;
+
+1 row updated.
+
+SQL> 
+SQL> -- this should fail because none of the columns in the patrons table allow nulls
+SQL> update patrons
+  2  set patronid = null, name = null, address = null, telephone = null
+  3  where patronid = 1;
+set patronid = null, name = null, address = null, telephone = null
+    *
+ERROR at line 2:
+ORA-01407: cannot update ("CDT27"."PATRONS"."PATRONID") to NULL 
+
+
+SQL> 
+SQL> -- this should fail because it changes the patronid_pk of an entry that other rows reference
+SQL> update patrons
+  2  set patronid = 999
+  3  where patronid = 1;
+update patrons
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (CDT27.PATRONID_FK) violated - child record
+found 
+
+
+SQL> 
+SQL> rollback;
+
+Rollback complete.
+
+SQL> spool off
