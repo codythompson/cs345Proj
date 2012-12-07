@@ -5,7 +5,7 @@ where patronid = 1;
 
 -- this should fail because none of the columns in the patrons table allow nulls
 update patrons
-set patronid = null, patronid_pk = null, name = null, address = null, telephone = null
+set patronid = null, name = null, address = null, telephone = null
 where patronid = 1;
 
 -- this should fail because it changes the patronid_pk of an entry that other rows reference
