@@ -8,29 +8,9 @@ insert into cdt27.books
 (isbn, title, author, publisher, publishdate)
 values (654321, 'TEST BOOK', 'Test Author', 'Some Publisher', SYSDATE);
 
--- This should NOT insert because isbn is null
+-- This should NOT insert because this table has no column that allows nulls
 insert into cdt27.books
 (isbn, title, author, publisher, publishdate)
-values (NULL, 'TEST BOOK', 'Test Author', 'Some Publisher', SYSDATE);
-
--- This should NOT insert because author is null
-insert into cdt27.books
-(isbn, title, author, publisher, publishdate)
-values (654322, NULL, 'Test Author', 'Some Publisher', SYSDATE);
-
--- This should NOT insert because title is null
-insert into cdt27.books
-(isbn, title, author, publisher, publishdate)
-values (654322, 'TEST BOOK', NULL, 'Some Publisher', SYSDATE);
-
--- This should NOT insert because publisher is null
-insert into cdt27.books
-(isbn, title, author, publisher, publishdate)
-values (654322, 'TEST BOOK', 'TEST TITLE', NULL, SYSDATE);
-
--- This should NOT insert because publishdate is null
-insert into cdt27.books
-(isbn, title, author, publisher, publishdate)
-values (654322, 'TEST BOOK', 'TEST TITLE', 'Some Publisher', NULL);
+values (NULL, NULL, NULL, NULL, NULL);
 
 rollback;
