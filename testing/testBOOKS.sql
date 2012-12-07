@@ -32,3 +32,5 @@ values (654322, 'TEST BOOK', 'TEST TITLE', NULL, SYSDATE);
 insert into books
 (isbn, title, author, publisher, publishdate)
 values (654322, 'TEST BOOK', 'TEST TITLE', 'Some Publisher', NULL);
+
+rollback;
