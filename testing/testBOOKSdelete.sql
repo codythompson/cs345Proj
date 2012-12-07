@@ -1,6 +1,6 @@
 -- this insertion is to test deleting an entry with no foreign keys references
 insert into books
-values (99, "test", "test", "test", SYSDATE);
+values (99, 'test', 'test', 'test', SYSDATE);
 
 -- this should work
 delete from books
