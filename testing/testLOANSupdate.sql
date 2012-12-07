@@ -11,5 +11,7 @@ where patronid = 6 AND copyid = 2;
 -- because the two FK are referenced from other tables and if the data doesn't exist the update 
 -- will fail
 update loans
-set patronid_fk = 1111, copid_fk = 2222
-where patronid = 6 AND copid = 2 
+set patronid = 1111, copid = 2222
+where patronid = 6 AND copid = 2;
+
+rollback;
