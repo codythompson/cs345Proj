@@ -1,0 +1,30 @@
+SQL> @testBOOKSdelete
+SQL> -- this insertion is to test deleting an entry with no foreign keys references
+SQL> insert into books
+  2  values (99, 'test', 'test', 'test', SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> -- this should work
+SQL> delete from books
+  2  where isbn = 99;
+
+1 row deleted.
+
+SQL> 
+SQL> -- this should violate a fk constraint on the copies table
+SQL> delete from books
+  2  where isbn = 9780140042528;
+delete from books
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (CDT27.ISBN_FK) violated - child record found 
+
+
+SQL> 
+SQL> rollback;
+
+Rollback complete.
+
+SQL> spool off
