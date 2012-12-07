@@ -5,3 +5,5 @@ values(null);
 
 update all_out
 set copyid = 678;
+
+rollback;

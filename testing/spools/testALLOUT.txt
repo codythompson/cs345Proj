@@ -1,0 +1,26 @@
+SQL> @testALLOUT
+SQL> -- neither of these should work because the view spans multiple tables
+SQL> insert into all_out
+  2  (copyid)
+  3  values(null);
+(copyid)
+ *
+ERROR at line 2:
+ORA-01779: cannot modify a column which maps to a non key-preserved table 
+
+
+SQL> 
+SQL> update all_out
+  2  set copyid = 678;
+set copyid = 678
+    *
+ERROR at line 2:
+ORA-01779: cannot modify a column which maps to a non key-preserved table 
+
+
+SQL> 
+SQL> rollback;
+
+Rollback complete.
+
+SQL> spool off
