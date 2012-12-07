@@ -1,0 +1,80 @@
+SQL> @testBOOKS.sql
+SQL> -- This should insert just fine
+SQL> insert into books
+  2  (isbn, title, author, publisher, publishdate)
+  3  values (654321, 'TEST BOOK', 'Test Author', 'Some Publisher', SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> -- This should NOT insert because the PK is the same
+SQL> insert into books
+  2  (isbn, title, author, publisher, publishdate)
+  3  values (654321, 'TEST BOOK', 'Test Author', 'Some Publisher', SYSDATE);
+insert into books
+*
+ERROR at line 1:
+ORA-00001: unique constraint (CDT27.ISBN_PK) violated 
+
+
+SQL> 
+SQL> -- This should NOT insert because isbn is null
+SQL> insert into books
+  2  (isbn, title, author, publisher, publishdate)
+  3  values (NULL, 'TEST BOOK', 'Test Author', 'Some Publisher', SYSDATE);
+values (NULL, 'TEST BOOK', 'Test Author', 'Some Publisher', SYSDATE)
+        *
+ERROR at line 3:
+ORA-01400: cannot insert NULL into ("CDT27"."BOOKS"."ISBN") 
+
+
+SQL> 
+SQL> -- This should NOT insert because author is null
+SQL> insert into books
+  2  (isbn, title, author, publisher, publishdate)
+  3  values (654322, NULL, 'Test Author', 'Some Publisher', SYSDATE);
+values (654322, NULL, 'Test Author', 'Some Publisher', SYSDATE)
+                *
+ERROR at line 3:
+ORA-01400: cannot insert NULL into ("CDT27"."BOOKS"."TITLE") 
+
+
+SQL> 
+SQL> -- This should NOT insert because title is null
+SQL> insert into books
+  2  (isbn, title, author, publisher, publishdate)
+  3  values (654322, 'TEST BOOK', NULL, 'Some Publisher', SYSDATE);
+values (654322, 'TEST BOOK', NULL, 'Some Publisher', SYSDATE)
+                             *
+ERROR at line 3:
+ORA-01400: cannot insert NULL into ("CDT27"."BOOKS"."AUTHOR") 
+
+
+SQL> 
+SQL> -- This should NOT insert because publisher is null
+SQL> insert into books
+  2  (isbn, title, author, publisher, publishdate)
+  3  values (654322, 'TEST BOOK', 'TEST TITLE', NULL, SYSDATE);
+values (654322, 'TEST BOOK', 'TEST TITLE', NULL, SYSDATE)
+                                           *
+ERROR at line 3:
+ORA-01400: cannot insert NULL into ("CDT27"."BOOKS"."PUBLISHER") 
+
+
+SQL> 
+SQL> -- This should NOT insert because publishdate is null
+SQL> insert into books
+  2  (isbn, title, author, publisher, publishdate)
+  3  values (654322, 'TEST BOOK', 'TEST TITLE', 'Some Publisher', NULL);
+values (654322, 'TEST BOOK', 'TEST TITLE', 'Some Publisher', NULL)
+                                                             *
+ERROR at line 3:
+ORA-01400: cannot insert NULL into ("CDT27"."BOOKS"."PUBLISHDATE") 
+
+
+SQL> 
+SQL> rollback;
+
+Rollback complete.
+
+SQL> spool off
