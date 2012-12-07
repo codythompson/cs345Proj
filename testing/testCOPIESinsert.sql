@@ -6,12 +6,12 @@ values (null, null);
 -- This should insert just fine
 insert into cdt27.copies
 (copyid, isbn)
-values (COPIES_NEXT_PK(), 1534);
+values (7, 97880140042528);
 
 -- This should NOt insert because the PK is the same as above
 insert into cdt27.copies
 (copyid, isbn)
-values (COPIES_NEXT_PK(), 1535);
+values (7, 97880140042528);
 
 -- Here is a working test of a books entry
 insert into cdt27.books
