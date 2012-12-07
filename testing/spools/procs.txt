@@ -1,0 +1,162 @@
+SQL> @testPROCSandFUNCS
+SQL> --AVAILABILITY CHECKING PROCEDURES
+SQL> --shows number of available books for book
+SQL> select cdt27.GetNumAvail('Dune') from dual;
+
+CDT27.GETNUMAVAIL('DUNE')                                                       
+-------------------------                                                       
+                        1                                                       
+
+SQL> 
+SQL> --shows error for wrong book name in system or null
+SQL> select cdt27.GetNumAvail('blah blah') from dual;
+
+CDT27.GETNUMAVAIL('BLAHBLAH')                                                   
+-----------------------------                                                   
+                            0                                                   
+
+SQL> 
+SQL> --shows availability of said book
+SQL> execute cdt27.CheckAvailability('dune');
+dune availability:                                                              
+1 copies of dune available.                                                     
+
+PL/SQL procedure successfully completed.
+
+SQL> 
+SQL> --shows error for wrong book name in system or null
+SQL> execute cdt27.CheckAvailability('blah blah');
+blah blah availability:                                                         
+No copies available.                                                            
+Expected available on:                                                          
+
+PL/SQL procedure successfully completed.
+
+SQL> 
+SQL> 
+SQL> --CHECKING IN/OUT PROCEDURES
+SQL> --checks out a book based on valid patron name and copyID
+SQL> execute cdt27.CheckOut('mark', 2);
+That book is already checked out!                                               
+
+PL/SQL procedure successfully completed.
+
+SQL> 
+SQL> --shows error due to wrong parameters in checkout process
+SQL> execute cdt27.CheckOut(null, null);
+BEGIN cdt27.CheckOut(null, null); END;
+
+*
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("CDT27"."LOANS"."COPYID")
+ORA-06512: at "CDT27.CHECKOUT", line 10
+ORA-06512: at line 1 
+
+
+SQL> 
+SQL> --checks in a book based on the copyID that was checked out from procedure above
+SQL> execute cdt27.CheckIn(2);
+Successfully Checked In!                                                        
+
+PL/SQL procedure successfully completed.
+
+SQL> 
+SQL> --shows error for wrong copyID in checkin process
+SQL> execute cdt27.CheckIn(null);
+Successfully Checked In!                                                        
+
+PL/SQL procedure successfully completed.
+
+SQL> 
+SQL> --LOAN HISTORY PROCEDURES
+SQL> --get the ID of a patron by their name
+SQL> select cdt27.GetPatronId('Mark') from dual;
+
+CDT27.GETPATRONID('MARK')                                                       
+-------------------------                                                       
+                                                                                
+
+SQL> 
+SQL> --get an error from trying to get ID because no name exists
+SQL> select cdt27.GetPatronId(null) from dual;
+
+CDT27.GETPATRONID(NULL)                                                         
+-----------------------                                                         
+                                                                                
+
+SQL> 
+SQL> --get the book history from a user based on their name
+SQL> execute cdt27.LoanHistory('Cody');
+Cody Loan History:                                                              
+END OF REPORT                                                                   
+
+PL/SQL procedure successfully completed.
+
+SQL> 
+SQL> --get an error trying to get loan history due to a bad user name
+SQL> execute cdt27.LoanHistory(null);
+Loan History:                                                                   
+END OF REPORT                                                                   
+
+PL/SQL procedure successfully completed.
+
+SQL> 
+SQL> 
+SQL> --get the currently checked out books via patron name
+SQL> execute cdt27.CurrentlyCheckedOut('Mark');
+Mark Loan History:                                                              
+----------------------                                                          
+END OF REPORT                                                                   
+----------------------                                                          
+
+PL/SQL procedure successfully completed.
+
+SQL> 
+SQL> --get an error when trying to get currently checked out books due to bad patron name
+SQL> execute cdt27.CurrentlyCheckedOut(null);
+Loan History:                                                                   
+----------------------                                                          
+END OF REPORT                                                                   
+----------------------                                                          
+
+PL/SQL procedure successfully completed.
+
+SQL> 
+SQL> 
+SQL> --PATRON PROCEDURES
+SQL> --successfully creating a new patron
+SQL> execute cdt27.NewPatron('Mark', ‘5 cool st.’, 9285551234);
+BEGIN cdt27.NewPatron('Mark', ‘5 cool st.’, 9285551234); END;
+
+                              *
+ERROR at line 1:
+ORA-06550: line 1, column 31:
+PLS-00103: Encountered the symbol "" when expecting one of the following: 
+( - + case mod new not null <an identifier> 
+<a double-quoted delimited-identifier> <a bind variable> 
+continue avg count current exists max min prior sql stddev 
+sum variance execute forall merge time timestamp interval 
+date <a string literal with character set specification> 
+<a number> <a single-quoted SQL string> pipe 
+<an alternatively-quoted string literal with character set specification> 
+<an alternatively- 
+
+
+SQL> 
+SQL> --enter wrong values for a new patron (causes errors)
+SQL> execute cdt27.NewPatron(null, null, null);
+BEGIN cdt27.NewPatron(null, null, null); END;
+
+*
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("CDT27"."PATRONS"."NAME")
+ORA-06512: at "CDT27.NEWPATRON", line 4
+ORA-06512: at line 1 
+
+
+SQL> 
+SQL> rollback;
+
+Rollback complete.
+
+SQL> spool off
