@@ -1,9 +1,9 @@
 --AVAILABILITY CHECKING PROCEDURES
 --shows number of available books for book
-execute GetNumAvail('Dune');
+select GetNumAvail('Dune') from dual;
 
 --shows error for wrong book name in system or null
-execute GetNumAvail('blah blah');
+select GetNumAvail('blah blah') from dual;
 
 --shows availability of said book
 execute CheckAvailability('dune');
@@ -27,10 +27,10 @@ execute CheckIn(null);
 
 --LOAN HISTORY PROCEDURES
 --get the ID of a patron by their name
-execute GetPatronId(‘Mark’);
+select GetPatronId(‘Mark’) from dual;
 
 --get an error from trying to get ID because no name exists
-execute GetPatronId(null);
+select GetPatronId(null) from dual;
 
 --get the book history from a user based on their name
 execute LoanHistory(‘Cody’);
@@ -46,9 +46,7 @@ execute CurrentlyCheckedOut(‘Mark’);
 execute CurrentlyCheckedOut(null);
 
 
-
-
-PATRON PROCEDURES
+--PATRON PROCEDURES
 --successfully creating a new patron
 execute NewPatron(‘Mark’, ‘5 cool st.’, 9285551234);
 
