@@ -1,7 +1,7 @@
 -- this should update just fine
 update patrons
 set name = 'Mark', address = '5 cool st.', telephone = 5551238888
-where patron = 1;
+where patronid = 1;
 
 -- this should fail because none of the columns in the patrons table allow nulls
 update patrons
