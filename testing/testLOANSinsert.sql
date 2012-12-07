@@ -1,7 +1,7 @@
 -- Here is a working test of a loans entry
 insert into cdt27.loans
 (copyid, patronid, returned, due)
-values (7, 8, SYSDATE, null);
+values (7, 8, null, SYSDATE);
 
 -- Here is a NON working test of a loans entry (no null values except for due)
 insert into cdt27.loans
