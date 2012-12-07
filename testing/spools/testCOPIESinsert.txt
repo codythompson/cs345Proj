@@ -1,0 +1,63 @@
+SQL> @testCOPIESinsert
+SQL> -- This should NOT insert because this table has no column that allows nulls
+SQL> insert into cdt27.copies
+  2  (copyid, isbn)
+  3  values (null, null);
+values (null, null)
+        *
+ERROR at line 3:
+ORA-01400: cannot insert NULL into ("CDT27"."COPIES"."COPYID") 
+
+
+SQL> 
+SQL> -- This should insert just fine
+SQL> insert into cdt27.copies
+  2  (copyid, isbn)
+  3  values (7, 9780140042528);
+
+1 row created.
+
+SQL> 
+SQL> -- This should NOt insert because the PK is the same as above
+SQL> insert into cdt27.copies
+  2  (copyid, isbn)
+  3  values (7, 9780140042528);
+insert into cdt27.copies
+*
+ERROR at line 1:
+ORA-00001: unique constraint (CDT27.COPYID_PK) violated 
+
+
+SQL> 
+SQL> -- Here is a working test of a books entry
+SQL> insert into cdt27.books
+  2  (isbn, title, author, publisher, publishdate)
+  3  values (654321, 'TEST BOOK', 'Test Author', 'Some Publisher', SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> -- Here the insert does work because it has a proper ISBN referenced
+SQL> insert into cdt27.copies
+  2  (copyid, isbn)
+  3  values (8, 654321);
+
+1 row created.
+
+SQL> 
+SQL> -- Here the insert does NOT work because it has a improper ISBN referenced
+SQL> insert into cdt27.copies
+  2  (copyid, isbn)
+  3  values (9, 44444);
+insert into cdt27.copies
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (CDT27.ISBN_FK) violated - parent key not found 
+
+
+SQL> 
+SQL> rollback;
+
+Rollback complete.
+
+SQL> spool off
