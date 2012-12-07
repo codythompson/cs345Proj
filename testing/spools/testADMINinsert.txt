@@ -1,0 +1,36 @@
+SQL> @testADMINinsert
+SQL> -- This should NOT insert because this table has no column that allows nulls
+SQL> insert into cdt27.admin
+  2  (adminid, name, address, telephone, superuser)
+  3  values (null, null, null, null, null);
+values (null, null, null, null, null)
+        *
+ERROR at line 3:
+ORA-01400: cannot insert NULL into ("CDT27"."ADMIN"."ADMINID") 
+
+
+SQL> 
+SQL> -- This should insert just fine
+SQL> insert into cdt27.admin
+  2  (adminid, name, address, telephone, superuser)
+  3  values (234, 'Mark', '5 Street', 1234567, 0);
+
+1 row created.
+
+SQL> 
+SQL> -- This should NOT insert because the PK is the same
+SQL> insert into cdt27.admin
+  2  (adminid, name, address, telephone, superuser)
+  3  values (234, 'Cody', '6 Street', 1234568, 1);
+insert into cdt27.admin
+*
+ERROR at line 1:
+ORA-00001: unique constraint (CDT27.ADMINID_PK) violated 
+
+
+SQL> 
+SQL> rollback;
+
+Rollback complete.
+
+SQL> spool off
