@@ -1,0 +1,37 @@
+SQL> @testPATRONSinsert
+SQL> 
+SQL> -- This should insert just fine
+SQL> insert into cdt27.patrons
+  2  (patronid, name, address, telephone)
+  3  values (8, 'MARK', '5 street', '6232228888');
+
+1 row created.
+
+SQL> 
+SQL> -- This should NOT insert because there is a same primary key as before
+SQL> insert into cdt27.patrons
+  2  (patronid, name, address, telephone)
+  3  values (8, 'CODY', '7 street', '6025558888');
+insert into cdt27.patrons
+*
+ERROR at line 1:
+ORA-00001: unique constraint (CDT27.PATRONID_PK) violated 
+
+
+SQL> 
+SQL> -- This should NOT insert because there is no column that can have null values
+SQL> insert into cdt27.patrons
+  2  (patronid, name, address, telephone)
+  3  values (null, null, null, null);
+values (null, null, null, null)
+        *
+ERROR at line 3:
+ORA-01400: cannot insert NULL into ("CDT27"."PATRONS"."PATRONID") 
+
+
+SQL> 
+SQL> rollback;
+
+Rollback complete.
+
+SQL> spool off
