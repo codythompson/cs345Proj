@@ -1,0 +1,31 @@
+SQL> @testPATRONSdelete
+SQL> -- this insertion is to test deleting an entry with no foreign keys references
+SQL> insert into cdt27.patrons
+  2  values (8, 'blah', 'blah', 1111111);
+
+1 row created.
+
+SQL> 
+SQL> -- this should work
+SQL> delete from cdt27.patrons
+  2  where patronid = 8;
+
+1 row deleted.
+
+SQL> 
+SQL> -- this should violate a fk constraint on the loans table
+SQL> delete from cdt27.patrons
+  2  where patronid = 1;
+delete from cdt27.patrons
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (CDT27.PATRONID_FK) violated - child record
+found 
+
+
+SQL> 
+SQL> rollback;
+
+Rollback complete.
+
+SQL> spool off
