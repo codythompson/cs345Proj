@@ -1,0 +1,36 @@
+SQL> @testBOOKS.sql
+SQL> -- This should insert just fine
+SQL> insert into cdt27.books
+  2  (isbn, title, author, publisher, publishdate)
+  3  values (654321, 'TEST BOOK', 'Test Author', 'Some Publisher', SYSDATE);
+
+1 row created.
+
+SQL> 
+SQL> -- This should NOT insert because the PK is the same
+SQL> insert into cdt27.books
+  2  (isbn, title, author, publisher, publishdate)
+  3  values (654321, 'TEST BOOK', 'Test Author', 'Some Publisher', SYSDATE);
+insert into cdt27.books
+*
+ERROR at line 1:
+ORA-00001: unique constraint (CDT27.ISBN_PK) violated 
+
+
+SQL> 
+SQL> -- This should NOT insert because this table has no column that allows nulls
+SQL> insert into cdt27.books
+  2  (isbn, title, author, publisher, publishdate)
+  3  values (NULL, NULL, NULL, NULL, NULL);
+values (NULL, NULL, NULL, NULL, NULL)
+        *
+ERROR at line 3:
+ORA-01400: cannot insert NULL into ("CDT27"."BOOKS"."ISBN") 
+
+
+SQL> 
+SQL> rollback;
+
+Rollback complete.
+
+SQL> spool off

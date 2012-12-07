@@ -1,0 +1,25 @@
+SQL> @testBOOKSupdate
+SQL> -- this should update just fine
+SQL> update books
+  2  set title = 'blah', author = 'blah', publisher = 'blah', publishdate = SYSDATE
+  3  where isbn = 9780140042528;
+
+1 row updated.
+
+SQL> 
+SQL> -- this should fail because none of the columns in the books table allow nulls
+SQL> update books
+  2  set isbn = NULL, title = NULL, author = NULL, publisher = NULL, publishdate = NULL
+  3  where isbn = 9780140042528;
+set isbn = NULL, title = NULL, author = NULL, publisher = NULL, publishdate = NULL
+    *
+ERROR at line 2:
+ORA-01407: cannot update ("CDT27"."BOOKS"."ISBN") to NULL 
+
+
+SQL> 
+SQL> rollback;
+
+Rollback complete.
+
+SQL> spool off
